@@ -1,3 +1,5 @@
+# Copyright (C) 2022, Oracle and/or its affiliates.
+
 FROM ghcr.io/oracle/oraclelinux:7-slim AS builder
 ARG ARCH
 ARG KUBERNETES_RELEASE=v1.17.0
