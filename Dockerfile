@@ -1,11 +1,12 @@
-# Copyright (C) 2022, Oracle and/or its affiliates.
+# Copyright (C) 2023, Oracle and/or its affiliates.
 
 FROM ghcr.io/oracle/oraclelinux:7-slim AS builder
 ARG ARCH
 ARG KUBERNETES_RELEASE=v1.25.7
 
+RUN pwd
 # copy olcne repos needed to install kubectl, istioctl
-COPY --from=build_base /root/go/src/github.com/verrazzano/verrazzano/platform-operator/repos/*.repo /etc/yum.repos.d/
+COPY --from=builder repos/*.repo /etc/yum.repos.d/
 
 WORKDIR /bin
 
