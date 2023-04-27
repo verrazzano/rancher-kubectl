@@ -2,7 +2,7 @@
 
 FROM ghcr.io/oracle/oraclelinux:7-slim AS build_base
 ARG ARCH
-ARG KUBERNETES_RELEASE=v1.25.7
+ARG KUBERNETES_RELEASE=v1.24.5
 
 RUN pwd
 # copy olcne repos needed to install kubectl, istioctl
