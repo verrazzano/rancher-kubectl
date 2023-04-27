@@ -2,12 +2,18 @@
 
 FROM ghcr.io/oracle/oraclelinux:7-slim AS builder
 ARG ARCH
-ARG KUBERNETES_RELEASE=v1.20.2
+ARG KUBERNETES_RELEASE=v1.25.7
+
+# copy olcne repos needed to install kubectl, istioctl
+COPY --from=build_base /root/go/src/github.com/verrazzano/verrazzano/platform-operator/repos/*.repo /etc/yum.repos.d/
+
 WORKDIR /bin
 
-RUN set -x \
- && curl -fsSLO https://storage.googleapis.com/kubernetes-release/release/${KUBERNETES_RELEASE}/bin/linux/${ARCH}/kubectl \
- && chmod +x kubectl
+RUN microdnf update -y \
+    && microdnf install -y --setopt=install_weak_deps=0 --setopt=tsflags=nodocs kubectl-1.25.7-1.el7  \
+    && microdnf clean all \
+    && rm -rf /var/cache/yum /var/lib/rpm/* \
+    && chmod +x kubectl
 
 FROM scratch
 COPY --from=builder /bin/kubectl /bin/kubectl
