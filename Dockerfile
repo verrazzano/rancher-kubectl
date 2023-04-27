@@ -13,7 +13,6 @@ WORKDIR /bin
 RUN yum update -y \
     && yum install -y kubectl-1.25.7-1.el7 \
     && yum clean all \
-    && yum -rf /var/cache/yum /var/lib/rpm/* \
     && chmod +x kubectl
 
 FROM scratch
