@@ -11,7 +11,7 @@ COPY repos/*.repo /etc/yum.repos.d/
 WORKDIR /bin
 
 RUN yum update -y \
-    && yum install -y --setopt=install_weak_deps=0 --setopt=tsflags=nodocs kubectl-1.25.7-1.el7 \
+    && yum install -y kubectl-1.25.7-1.el7 \
     && yum clean all \
     && yum -rf /var/cache/yum /var/lib/rpm/* \
     && chmod +x kubectl
