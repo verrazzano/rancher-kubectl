@@ -1,12 +1,12 @@
 # Copyright (C) 2023, Oracle and/or its affiliates.
 
-FROM ghcr.io/oracle/oraclelinux:7-slim AS builder
+FROM ghcr.io/oracle/oraclelinux:7-slim AS build_base
 ARG ARCH
 ARG KUBERNETES_RELEASE=v1.25.7
 
 RUN pwd
 # copy olcne repos needed to install kubectl, istioctl
-COPY --from=builder repos/*.repo /etc/yum.repos.d/
+COPY --from=build_base repos/*.repo /etc/yum.repos.d/
 
 WORKDIR /bin
 
@@ -19,6 +19,6 @@ RUN yum-config-manager --enable ol7_optional_latest && \
     && chmod +x kubectl
 
 FROM scratch
-COPY --from=builder /bin/kubectl /bin/kubectl
+COPY --from=build_base /bin/kubectl /bin/kubectl
 ENTRYPOINT ["/bin/kubectl"]
 CMD ["help"]
