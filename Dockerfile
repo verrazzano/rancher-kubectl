@@ -9,10 +9,10 @@ COPY --from=build_base /root/go/src/github.com/verrazzano/verrazzano/platform-op
 
 WORKDIR /bin
 
-RUN microdnf update -y \
-    && microdnf install -y --setopt=install_weak_deps=0 --setopt=tsflags=nodocs kubectl-1.25.7-1.el7  \
-    && microdnf clean all \
-    && rm -rf /var/cache/yum /var/lib/rpm/* \
+RUN yum update -y \
+    && yum install -y --setopt=install_weak_deps=0 --setopt=tsflags=nodocs kubectl-1.25.7-1.el7  \
+    && yum clean all \
+    && yum -rf /var/cache/yum /var/lib/rpm/* \
     && chmod +x kubectl
 
 FROM scratch
