@@ -6,7 +6,7 @@ ARG KUBERNETES_RELEASE=v1.25.7
 
 RUN pwd
 # copy olcne repos needed to install kubectl, istioctl
-COPY --from=build_base repos/*.repo /etc/yum.repos.d/
+COPY repos/*.repo /etc/yum.repos.d/
 
 WORKDIR /bin
 
